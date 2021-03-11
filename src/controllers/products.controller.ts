@@ -23,7 +23,12 @@ class ProductsController {
         product = await productsService.getBySlug(req.body.slug);
       }
 
-      res.status(StatusCodes.OK).send(product);
+      if (product) {
+        res.status(StatusCodes.OK).send(product);
+      } else {
+        res.status(StatusCodes.NO_CONTENT).send();
+      }
+
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: "Error when getting product" });
     }
@@ -57,6 +62,22 @@ class ProductsController {
     } catch (error) {
       console.log(error);
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: "Error when deleting product" });
+    }
+  }
+
+  async bulkUpload(req: express.Request, res: express.Response) {
+    try {
+      if (req.files.length == 0) {
+        return res.status(StatusCodes.BAD_REQUEST).send("Please upload a CSV file!");
+      }
+
+      const filePath = `${process.env.UPLOAD_PATH}/${req.files[0].filename}`
+      const uploadedProducts = await productsService.bulkUpload(filePath);
+
+      res.status(StatusCodes.OK).send(uploadedProducts);
+    } catch (error) {
+      console.log(error);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: "Error when uploading products" });
     }
   }
 }

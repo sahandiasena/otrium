@@ -3,9 +3,9 @@ import { BrandFactory } from './brand.model';
 import { ProductFactory } from './product.model';
 
 export const sequelize = new Sequelize(
-  'otrium',
-  'root',
-  '0tr1um', {
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD, {
   port: Number(process.env.DB_PORT) || 3306,
   host: process.env.DB_HOST || "localhost",
   dialect: 'mysql'

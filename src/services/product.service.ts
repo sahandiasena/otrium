@@ -1,3 +1,5 @@
+import fs from 'fs'
+import csv from 'csv-parser'
 import { ProductAttributes, ProductModel } from "../models/product.model";
 import { BaseService } from "./base.interface";
 
@@ -29,6 +31,35 @@ class ProductService implements BaseService<ProductModel, ProductAttributes> {
 
   async deleteById(id: number): Promise<void> {
     await ProductsDao.deleteProductById(id);
+  }
+
+  async bulkUpload(filePath: string): Promise<ProductModel[]> {
+    const products = await this.readFromFile(filePath);
+    const uploadedProducts = await ProductsDao.addManyProducts(products);
+    fs.unlink(filePath, err => {
+      if (err)
+        console.error(err);
+      else
+        console.log("file deleted")
+    });
+
+    return uploadedProducts;
+  }
+
+  private readFromFile(filePath: string): Promise<ProductAttributes[]> {
+    return new Promise((resolve, reject) => {
+      const products: ProductAttributes[] = [];
+      fs.createReadStream(filePath)
+        .pipe(csv())
+        .on('data', (row: ProductAttributes) => {
+          products.push(row);
+        })
+        .on('end', () => {
+          console.log('CSV file successfully processed');
+          resolve(products);
+        })
+        .on('error', err => reject(err));
+    });
   }
 }
 

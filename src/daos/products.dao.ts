@@ -33,6 +33,10 @@ class ProductsDao {
   async deleteProductById(id: number): Promise<void> {
     await Product.destroy({ where: { id: id } });
   }
+
+  async addManyProducts(products: ProductAttributes[]): Promise<ProductModel[]> {
+    return Product.bulkCreate(products);
+  }
 }
 
 export default new ProductsDao();
