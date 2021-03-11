@@ -21,6 +21,10 @@ docker stack ps mysql
 ```
 **Wait for Current State to change to 'running'**
 
+## Development server
+
+Run `npm start` for a dev server. The app will automatically reload if you change any of the source files.
+
 ## Seed data (optional)
 Insert
 ```
@@ -32,9 +36,6 @@ Delete
 ```
 npx sequelize-cli db:seed:undo:all
 ```
-## Development server
-
-Run `npm start` for a dev server. The app will automatically reload if you change any of the source files.
 
 ## API Endpoints
 Rest API URL: `http://localhost:3000/`.
