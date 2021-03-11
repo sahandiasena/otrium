@@ -21,7 +21,17 @@ docker stack ps mysql
 ```
 **Wait for Current State to change to 'running'**
 
-&nbsp;
+## Seed data (optional)
+Insert
+```
+cd seeder
+npx sequelize-cli db:seed:all
+```
+
+Delete
+```
+npx sequelize-cli db:seed:undo:all
+```
 ## Development server
 
 Run `npm start` for a dev server. The app will automatically reload if you change any of the source files.
@@ -106,6 +116,8 @@ mutation {
 ```
 name,slug,sku,brandId
 Playstation 5, ps5, ps-5, 1
+...
+...
 ```
 
 ## Technologies Used

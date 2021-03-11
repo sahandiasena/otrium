@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "root",
+    "password": "0tr1um",
+    "database": "otrium",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
