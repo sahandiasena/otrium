@@ -1,7 +1,7 @@
 {
   "name": "otrium",
   "version": "1.0.0",
-  "description": "Assignment for Gapstars",
+  "description": "A simple REST API with a GraphQL wrapper to maintain a products list.",
   "main": "app.ts",
   "scripts": {
     "start": "nodemon",
