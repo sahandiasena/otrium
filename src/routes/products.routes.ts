@@ -14,10 +14,15 @@ export class ProductsRoutes extends CommonRoutesConfig {
   configureRoutes(): express.Application {
     this.app.route(`/products`)
       .get(ProductsController.getAllProducts)
-      .post(ProductsController.addProduct)
+      .post(
+        productsMiddleware.productValidationRules(),
+        productsMiddleware.validateProduct,
+        ProductsController.addProduct)
 
     this.app.route(`/products/upload`)
-      .post(ProductsController.bulkUpload);
+      .post(
+        productsMiddleware.validateFile,
+        ProductsController.bulkUpload);
 
     this.app.route(`/products/:productId`)
       .get(
@@ -25,6 +30,8 @@ export class ProductsRoutes extends CommonRoutesConfig {
         ProductsController.getProductById)
       .put(
         productsMiddleware.validateProductId,
+        productsMiddleware.productValidationRules(),
+        productsMiddleware.validateProduct,
         ProductsController.updateProduct)
       .delete(
         productsMiddleware.validateProductId,

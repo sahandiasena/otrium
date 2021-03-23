@@ -15,7 +15,7 @@ export class Product {
   @Field()
   sku: string;
 
-  @Field(() => Brand, { nullable: true })
+  @Field(() => Brand)
   brand: Brand;
 }
 

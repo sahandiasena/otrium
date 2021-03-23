@@ -2,18 +2,32 @@ import express from "express";
 import productsService from "../services/product.service"
 import { StatusCodes } from 'http-status-codes';
 import { ProductModel } from "../models/product.model";
+import { ErrorDto } from "../dtos/error.dto";
 
+/**
+ * API endpoints related to product operations.
+ */
 class ProductsController {
+  /**
+   * Returns all products
+   * @param req Express request instance
+   * @param res Express respinse instance
+   */
   async getAllProducts(req: express.Request, res: express.Response) {
     try {
       const products = await productsService.getAll();
       res.status(StatusCodes.OK).send(products);
     } catch (error) {
-      console.log(error);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: "Error when getting all products" });
+      console.error(error);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(new ErrorDto("Error when getting all products"));
     }
   }
 
+  /**
+   * Returns product belongs to the provided product id.
+   * @param req Express request instance
+   * @param res Express respinse instance
+   */
   async getProductById(req: express.Request, res: express.Response) {
     try {
       let product: ProductModel;
@@ -28,56 +42,72 @@ class ProductsController {
       } else {
         res.status(StatusCodes.NO_CONTENT).send();
       }
-
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: "Error when getting product" });
+      console.error(error);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(new ErrorDto("Error when getting product"));
     }
 
   }
 
+  /**
+   * Saves provided product.
+   * @param req Express request instance
+   * @param res Express respinse instance
+   */
   async addProduct(req: express.Request, res: express.Response) {
     try {
       const product = await productsService.create(req.body);
-      res.status(StatusCodes.OK).send(product);
+      res.status(StatusCodes.CREATED).send(product);
     } catch (error) {
-      console.log(error);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: "Error when adding product" });
+      console.error(error);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(new ErrorDto("Error when adding product"));
     }
   }
 
+  /**
+   * Updates product by product id.
+   * @param req Express request instance
+   * @param res Express respinse instance
+   */
   async updateProduct(req: express.Request, res: express.Response) {
     try {
       const product = await productsService.update(parseInt(req.body.id), req.body);
       res.status(StatusCodes.CREATED).send(product);
     } catch (error) {
-      console.log(error);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: "Error when updating product" });
+      console.error(error);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(new ErrorDto("Error when updating product"));
     }
   }
 
+  /**
+   * Deletes product by product id.
+   * @param req Express request instance
+   * @param res Express respinse instance
+   */
   async deleteProductById(req: express.Request, res: express.Response) {
     try {
       await productsService.deleteById(parseInt(req.body.id))
       res.status(StatusCodes.OK);
     } catch (error) {
-      console.log(error);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: "Error when deleting product" });
+      console.error(error);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(new ErrorDto("Error when deleting product"));
     }
   }
 
+  /**
+   * Uploads multiple products provided in a CSV file.
+   * @param req Express request instance
+   * @param res Express respinse instance
+   */
   async bulkUpload(req: express.Request, res: express.Response) {
     try {
-      if (req.files.length == 0) {
-        return res.status(StatusCodes.BAD_REQUEST).send("Please upload a CSV file!");
-      }
-
       const filePath = `${process.env.UPLOAD_PATH}/${req.files[0].filename}`
       const uploadedProducts = await productsService.bulkUpload(filePath);
 
       res.status(StatusCodes.OK).send(uploadedProducts);
     } catch (error) {
-      console.log(error);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: "Error when uploading products" });
+      console.error(error);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(new ErrorDto("Error when uploading products"));
     }
   }
 }

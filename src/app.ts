@@ -11,6 +11,8 @@ dotenv.config();
 import { sequelize } from './models';
 import { ProductResolver } from './resolvers/product.resolver';
 import { ProductsRoutes } from './routes/products.routes';
+import winston from 'winston';
+import expressWinston from 'express-winston';
 
 async function main() {
   sequelize
@@ -41,6 +43,13 @@ async function main() {
   app.use(upload.any());
 
   new ProductsRoutes(app);
+
+  app.use(expressWinston.logger({
+    transports: [
+      new winston.transports.Console(),
+      new winston.transports.File({ filename: "error.log", dirname: "./logs/", level: 'info' })
+    ]
+  }));
 
   app.get('/', (req, res) => {
     res.send('Welcome to otrium!!');

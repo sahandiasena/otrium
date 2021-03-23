@@ -47,7 +47,7 @@ GET /products/:id
 POST /products/
 PUT /products/:id
 
-POST /product/upload
+POST /products/upload
 ```
 
 ### Request
@@ -103,7 +103,7 @@ GraphQL URL: `http://localhost:3000/graphql`
 ### Mutation
 ```
 mutation {
-  addProduct(newProduct: { name: string, slug: string sku: string, brandId: number }) {
+  addProduct(newProduct: { name: string, slug: string, sku: string, brandId: number }) {
     name
     slug
     sku
@@ -127,3 +127,12 @@ Playstation 5, ps5, ps-5, 1
 * ExpressJS
 * Typescript
 * GraphQL
+
+## Assumptions
+
+* Slug will not contain special characters
+
+## Todo
+
+* Make error responses consistent
+* Add missing documentation
