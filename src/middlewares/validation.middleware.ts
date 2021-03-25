@@ -38,6 +38,18 @@ class ValidationMiddleware {
 
     return res.status(StatusCodes.UNPROCESSABLE_ENTITY).send(extractedErrors)
   }
+
+  validateProductId(req: express.Request, res: express.Response, next: express.NextFunction) {
+    const errors = validationResult(req)
+    if (errors.isEmpty()) {
+      return next()
+    }
+
+    const extractedErrors = new ErrorDto();
+    errors.array().map(err => extractedErrors.errors.push(err.msg))
+
+    return res.status(StatusCodes.NOT_ACCEPTABLE).send(extractedErrors)
+  }
 }
 
 export default new ValidationMiddleware();

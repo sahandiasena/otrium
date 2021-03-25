@@ -32,12 +32,14 @@ export class ProductsRoutes extends CommonRoutesConfig {
         ProductsController.getProductById)
       .put(
         validationMiddleware.productIdValidationRules(),
+        validationMiddleware.validateProductId,
         productsMiddleware.parseProductId,
         validationMiddleware.productModelValidationRules(),
         validationMiddleware.validateProduct,
         ProductsController.updateProduct)
       .delete(
         validationMiddleware.productIdValidationRules(),
+        validationMiddleware.validateProductId,
         productsMiddleware.parseProductId,
         ProductsController.deleteProductById);
 
