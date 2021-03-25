@@ -8,6 +8,15 @@ import { ErrorDto } from "../dtos/error.dto";
  * API endpoints related to product operations.
  */
 class ProductsController {
+  errorDto: ErrorDto;
+
+  /**
+   * Product controller constructor.
+   */
+  constructor() {
+    this.errorDto = new ErrorDto();
+  }
+
   /**
    * Returns all products
    * @param req Express request instance
@@ -18,8 +27,9 @@ class ProductsController {
       const products = await productsService.getAll();
       res.status(StatusCodes.OK).send(products);
     } catch (error) {
-      console.error(error);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(new ErrorDto("Error when getting all products"));
+      console.error(error)
+      this.errorDto.errors.push("Error when getting all products")
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }
   }
 
@@ -44,7 +54,8 @@ class ProductsController {
       }
     } catch (error) {
       console.error(error);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(new ErrorDto("Error when getting product"));
+      this.errorDto.errors.push("Error when getting product")
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }
 
   }
@@ -60,7 +71,8 @@ class ProductsController {
       res.status(StatusCodes.CREATED).send(product);
     } catch (error) {
       console.error(error);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(new ErrorDto("Error when adding product"));
+      this.errorDto.errors.push("Error when adding product")
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }
   }
 
@@ -75,7 +87,8 @@ class ProductsController {
       res.status(StatusCodes.CREATED).send(product);
     } catch (error) {
       console.error(error);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(new ErrorDto("Error when updating product"));
+      this.errorDto.errors.push("Error when updating product")
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }
   }
 
@@ -90,7 +103,8 @@ class ProductsController {
       res.status(StatusCodes.OK);
     } catch (error) {
       console.error(error);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(new ErrorDto("Error when deleting product"));
+      this.errorDto.errors.push("Error when deleting product")
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }
   }
 
@@ -107,7 +121,8 @@ class ProductsController {
       res.status(StatusCodes.OK).send(uploadedProducts);
     } catch (error) {
       console.error(error);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(new ErrorDto("Error when uploading products"));
+      this.errorDto.errors.push("Error when uploading products")
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }
   }
 }

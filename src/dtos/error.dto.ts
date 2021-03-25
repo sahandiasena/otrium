@@ -1,7 +1,8 @@
 export class ErrorDto {
-  constructor(error: string) {
-    this.error = error;
+
+  constructor() {
+    this.errors = [];
   }
 
-  error: string;
+  errors: string[];
 }
