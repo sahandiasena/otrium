@@ -1,4 +1,4 @@
-import winston from "winston"
+import winston from 'winston'
 
 const format = winston.format.combine(
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }),
@@ -8,10 +8,10 @@ const format = winston.format.combine(
   ),
 )
 const transports = [
-  new winston.transports.Console({ level: "info" }),
+  new winston.transports.Console({ level: 'info' }),
   new winston.transports.File({
-    filename: "error.log",
-    dirname: "./logs/",
+    filename: 'error.log',
+    dirname: './logs/',
     level: 'warn',
     handleExceptions: true,
     maxsize: 5242880, // 5MB
@@ -20,7 +20,7 @@ const transports = [
 ]
 
 const Logger = winston.createLogger({
-  level: "warn",
+  level: 'warn',
   format,
   transports,
 })

@@ -15,7 +15,7 @@ export type ProductStatic = typeof Model & {
 };
 
 export function ProductFactory(sequelize: Sequelize): ProductStatic {
-  return <ProductStatic>sequelize.define("product", {
+  return <ProductStatic>sequelize.define('product', {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,

@@ -1,10 +1,10 @@
 import fs from 'fs'
 import csv from 'csv-parser'
-import { ProductAttributes, ProductModel } from "../models/product.model";
-import { BaseService } from "./base.interface";
+import { ProductAttributes, ProductModel } from '../models/product.model';
+import { BaseService } from './base.interface';
 
 import ProductsDao from './../daos/products.dao'
-import { Brand } from "../models";
+import { Brand } from '../models';
 import Logger from '../utils/logger';
 
 class ProductService implements BaseService<ProductModel, ProductAttributes> {
@@ -41,7 +41,7 @@ class ProductService implements BaseService<ProductModel, ProductAttributes> {
       if (err)
         Logger.error(err);
       else
-        Logger.info("file deleted")
+        Logger.info('file deleted')
     });
 
     return uploadedProducts;

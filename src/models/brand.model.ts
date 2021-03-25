@@ -1,5 +1,5 @@
-import { BuildOptions, DataTypes, Model, Sequelize } from "sequelize";
-import { BaseAttributes } from "./base.model";
+import { BuildOptions, DataTypes, Model, Sequelize } from 'sequelize';
+import { BaseAttributes } from './base.model';
 
 interface BrandAttribute extends BaseAttributes {
   name: string;
@@ -13,7 +13,7 @@ type BrandStatic = typeof Model & {
 };
 
 export function BrandFactory(sequelize: Sequelize): BrandStatic {
-  return <BrandStatic>sequelize.define("brand", {
+  return <BrandStatic>sequelize.define('brand', {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,

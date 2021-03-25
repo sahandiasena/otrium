@@ -1,17 +1,17 @@
-import express from "express";
-import { body, param, validationResult } from "express-validator";
-import { StatusCodes } from "http-status-codes";
-import { ErrorDto } from "../dtos/error.dto";
+import express from 'express';
+import { body, param, validationResult } from 'express-validator';
+import { StatusCodes } from 'http-status-codes';
+import { ErrorDto } from '../dtos/error.dto';
 
 class ValidationMiddleware {
   productModelValidationRules = () => {
     return [
-      body('name').notEmpty().withMessage("Name required."),
-      body('slug').notEmpty().withMessage("Slug required."),
-      body('slug').isSlug().withMessage("Invalid slug."),
-      body('sku').notEmpty().withMessage("SKU required."),
-      body('brandId').notEmpty().withMessage("BrandId required."),
-      body('brandId').isInt().withMessage("Invalid brand Id."),
+      body('name').notEmpty().withMessage('Name required.'),
+      body('slug').notEmpty().withMessage('Slug required.'),
+      body('slug').isSlug().withMessage('Invalid slug.'),
+      body('sku').notEmpty().withMessage('SKU required.'),
+      body('brandId').notEmpty().withMessage('BrandId required.'),
+      body('brandId').isInt().withMessage('Invalid brand Id.'),
     ]
   }
 
@@ -23,7 +23,7 @@ class ValidationMiddleware {
 
   productIdValidationRules = () => {
     return [
-      param('productId').isInt().withMessage("Invalid product id.")
+      param('productId').isInt().withMessage('Invalid product id.')
     ]
   }
 

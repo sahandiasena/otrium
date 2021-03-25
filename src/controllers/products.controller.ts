@@ -1,9 +1,9 @@
-import express from "express";
-import productsService from "../services/product.service"
+import express from 'express';
+import productsService from '../services/product.service'
 import { StatusCodes } from 'http-status-codes';
-import { ProductModel } from "../models/product.model";
-import { ErrorDto } from "../dtos/error.dto";
-import Logger from "../utils/logger";
+import { ProductModel } from '../models/product.model';
+import { ErrorDto } from '../dtos/error.dto';
+import Logger from '../utils/logger';
 
 /**
  * API endpoints related to product operations.
@@ -22,7 +22,7 @@ class ProductsController {
       res.status(StatusCodes.OK).send(products);
     } catch (error) {
       Logger.error(error)
-      this.errorDto.errors.push("Error when getting all products")
+      this.errorDto.errors.push('Error when getting all products')
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }
   }
@@ -48,7 +48,7 @@ class ProductsController {
       }
     } catch (error) {
       Logger.error(error);
-      this.errorDto.errors.push("Error when getting product")
+      this.errorDto.errors.push('Error when getting product')
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }
 
@@ -65,7 +65,7 @@ class ProductsController {
       res.status(StatusCodes.CREATED).send(product);
     } catch (error) {
       Logger.error(error);
-      this.errorDto.errors.push("Error when adding product")
+      this.errorDto.errors.push('Error when adding product')
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }
   }
@@ -81,7 +81,7 @@ class ProductsController {
       res.status(StatusCodes.CREATED).send(product);
     } catch (error) {
       Logger.error(error);
-      this.errorDto.errors.push("Error when updating product")
+      this.errorDto.errors.push('Error when updating product')
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }
   }
@@ -97,7 +97,7 @@ class ProductsController {
       res.status(StatusCodes.OK);
     } catch (error) {
       Logger.error(error);
-      this.errorDto.errors.push("Error when deleting product")
+      this.errorDto.errors.push('Error when deleting product')
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }
   }
@@ -115,7 +115,7 @@ class ProductsController {
       res.status(StatusCodes.OK).send(uploadedProducts);
     } catch (error) {
       Logger.error(error);
-      this.errorDto.errors.push("Error when uploading products")
+      this.errorDto.errors.push('Error when uploading products')
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }
   }

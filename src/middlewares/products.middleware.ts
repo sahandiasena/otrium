@@ -1,7 +1,7 @@
-import express from "express";
-import { validationResult } from "express-validator";
-import { StatusCodes } from "http-status-codes";
-import { ErrorDto } from "../dtos/error.dto";
+import express from 'express';
+import { validationResult } from 'express-validator';
+import { StatusCodes } from 'http-status-codes';
+import { ErrorDto } from '../dtos/error.dto';
 
 class ProductsMiddleware {
   async parseProductId(req: express.Request, res: express.Response, next: express.NextFunction) {
@@ -32,7 +32,7 @@ class ProductsMiddleware {
   async validateFile(req: express.Request, res: express.Response, next: express.NextFunction) {
     if (req.files.length == 0) {
       const errorDto = new ErrorDto();
-      errorDto.errors.push("Please upload a CSV file!");
+      errorDto.errors.push('Please upload a CSV file!');
       res.status(StatusCodes.NOT_ACCEPTABLE).send(errorDto);
     }
 

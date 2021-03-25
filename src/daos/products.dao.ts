@@ -1,6 +1,6 @@
-import { FindOptions, UpdateOptions } from "sequelize/types";
-import { Brand, Product } from "../models";
-import { ProductAttributes, ProductModel } from "../models/product.model";
+import { FindOptions, UpdateOptions } from 'sequelize/types';
+import { Brand, Product } from '../models';
+import { ProductAttributes, ProductModel } from '../models/product.model';
 
 class ProductsDao {
   async getProducts(findOptions?: FindOptions<ProductAttributes>): Promise<ProductModel[]> {

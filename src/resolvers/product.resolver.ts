@@ -1,7 +1,7 @@
-import axios from "axios";
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
-import { ProductModel } from "../models/product.model";
-import { Product, ProductInput } from "../typedefs/types/product";
+import axios from 'axios';
+import { Arg, Mutation, Query, Resolver } from 'type-graphql';
+import { ProductModel } from '../models/product.model';
+import { Product, ProductInput } from '../typedefs/types/product';
 
 const baseUrl = `http://${process.env.HOST}:${process.env.PORT}`;
 
