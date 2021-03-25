@@ -4,7 +4,7 @@ A simple REST API with a GraphQL wrapper to maintain a products list.
 
 ## Prerequisites
 
-* Node
+* Node v12.13
 * Docker
 
 ## Installation
