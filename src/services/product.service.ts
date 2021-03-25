@@ -5,6 +5,7 @@ import { BaseService } from "./base.interface";
 
 import ProductsDao from './../daos/products.dao'
 import { Brand } from "../models";
+import Logger from '../utils/logger';
 
 class ProductService implements BaseService<ProductModel, ProductAttributes> {
   async getAll(): Promise<ProductModel[]> {
@@ -38,9 +39,9 @@ class ProductService implements BaseService<ProductModel, ProductAttributes> {
     const uploadedProducts = await ProductsDao.addManyProducts(products);
     fs.unlink(filePath, err => {
       if (err)
-        console.error(err);
+        Logger.error(err);
       else
-        console.log("file deleted")
+        Logger.info("file deleted")
     });
 
     return uploadedProducts;
@@ -55,7 +56,7 @@ class ProductService implements BaseService<ProductModel, ProductAttributes> {
           products.push(row);
         })
         .on('end', () => {
-          console.log('CSV file successfully processed');
+          Logger.info('CSV file successfully processed');
           resolve(products);
         })
         .on('error', err => reject(err));

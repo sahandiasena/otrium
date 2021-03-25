@@ -3,19 +3,13 @@ import productsService from "../services/product.service"
 import { StatusCodes } from 'http-status-codes';
 import { ProductModel } from "../models/product.model";
 import { ErrorDto } from "../dtos/error.dto";
+import Logger from "../utils/logger";
 
 /**
  * API endpoints related to product operations.
  */
 class ProductsController {
-  errorDto: ErrorDto;
-
-  /**
-   * Product controller constructor.
-   */
-  constructor() {
-    this.errorDto = new ErrorDto();
-  }
+  errorDto = new ErrorDto();
 
   /**
    * Returns all products
@@ -27,7 +21,7 @@ class ProductsController {
       const products = await productsService.getAll();
       res.status(StatusCodes.OK).send(products);
     } catch (error) {
-      console.error(error)
+      Logger.error(error)
       this.errorDto.errors.push("Error when getting all products")
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }
@@ -53,7 +47,7 @@ class ProductsController {
         res.status(StatusCodes.NO_CONTENT).send();
       }
     } catch (error) {
-      console.error(error);
+      Logger.error(error);
       this.errorDto.errors.push("Error when getting product")
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }
@@ -70,7 +64,7 @@ class ProductsController {
       const product = await productsService.create(req.body);
       res.status(StatusCodes.CREATED).send(product);
     } catch (error) {
-      console.error(error);
+      Logger.error(error);
       this.errorDto.errors.push("Error when adding product")
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }
@@ -86,7 +80,7 @@ class ProductsController {
       const product = await productsService.update(parseInt(req.body.id), req.body);
       res.status(StatusCodes.CREATED).send(product);
     } catch (error) {
-      console.error(error);
+      Logger.error(error);
       this.errorDto.errors.push("Error when updating product")
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }
@@ -102,7 +96,7 @@ class ProductsController {
       await productsService.deleteById(parseInt(req.body.id))
       res.status(StatusCodes.OK);
     } catch (error) {
-      console.error(error);
+      Logger.error(error);
       this.errorDto.errors.push("Error when deleting product")
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }
@@ -120,7 +114,7 @@ class ProductsController {
 
       res.status(StatusCodes.OK).send(uploadedProducts);
     } catch (error) {
-      console.error(error);
+      Logger.error(error);
       this.errorDto.errors.push("Error when uploading products")
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(this.errorDto);
     }

@@ -10,17 +10,15 @@ dotenv.config();
 import { sequelize } from './models';
 import { ProductResolver } from './resolvers/product.resolver';
 import { ProductsRoutes } from './routes/products.routes';
-import winston from 'winston';
-import expressWinston from 'express-winston';
-import { ErrorDto } from './dtos/error.dto';
 import { GraphQLError } from 'graphql';
+import Logger from './utils/logger';
 
 async function main() {
   sequelize
     .sync()
-    .then(() => console.info("connected to db"))
+    .then(() => Logger.info("connected to db"))
     .catch(err => {
-      console.error(err);
+      Logger.error(err);
       throw "error";
     });
 
@@ -35,7 +33,7 @@ async function main() {
   const server = new ApolloServer({
     schema,
     formatError: (err) => {
-      console.error(err);
+      Logger.error(err);
       if (err instanceof ValidationError) {
         return new GraphQLError(err.message);
       } else if (err.originalError["response"] != null) {
@@ -56,19 +54,12 @@ async function main() {
 
   new ProductsRoutes(app);
 
-  app.use(expressWinston.logger({
-    transports: [
-      new winston.transports.Console(),
-      new winston.transports.File({ filename: "error.log", dirname: "./logs/", level: 'info' })
-    ]
-  }));
-
   app.get('/', (req, res) => {
     res.send('Welcome to otrium!!');
   });
 
   app.listen(port, () => {
-    return console.log(`server is listening on http://${process.env.HOST}:${process.env.PORT}`);
+    return Logger.info(`server is listening on http://${process.env.HOST}:${process.env.PORT}`);
   });
 }
 

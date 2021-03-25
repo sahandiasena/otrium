@@ -134,5 +134,4 @@ Playstation 5, ps5, ps-5, 1
 
 ## Todo
 
-* Make error responses consistent
 * Add missing documentation
