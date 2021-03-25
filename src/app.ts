@@ -1,7 +1,6 @@
 import dotenv from 'dotenv'
 import 'reflect-metadata';
-import { ApolloServer } from 'apollo-server-express';
-import bodyParser from 'body-parser';
+import { ApolloServer, ValidationError } from 'apollo-server-express';
 import cors from 'cors';
 import multer from 'multer';
 import express from 'express';
@@ -13,6 +12,8 @@ import { ProductResolver } from './resolvers/product.resolver';
 import { ProductsRoutes } from './routes/products.routes';
 import winston from 'winston';
 import expressWinston from 'express-winston';
+import { ErrorDto } from './dtos/error.dto';
+import { GraphQLError } from 'graphql';
 
 async function main() {
   sequelize
@@ -33,12 +34,23 @@ async function main() {
 
   const server = new ApolloServer({
     schema,
+    formatError: (err) => {
+      console.error(err);
+      if (err instanceof ValidationError) {
+        return new GraphQLError(err.message);
+      } else if (err.originalError["response"] != null) {
+        const res = err.originalError["response"];
+        return new GraphQLError(res.data.errors);
+      } else {
+        return err;
+      }
+    }
   });
 
   server.applyMiddleware({ app })
 
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
   app.use(cors());
   app.use(upload.any());
 
