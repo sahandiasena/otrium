@@ -135,3 +135,4 @@ Playstation 5, ps5, ps-5, 1
 ## Todo
 
 * Add missing documentation
+* Require more tests
