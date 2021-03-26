@@ -11,6 +11,9 @@
   },
   "author": "Sahan Diasena",
   "license": "ISC",
+  "peerDependencies": {
+    "class-validator": ">=0.12.0"
+  },
   "devDependencies": {
     "@types/bluebird": "^3.5.33",
     "@types/cors": "^2.8.10",
