@@ -14,6 +14,11 @@ A simple REST API with a GraphQL wrapper to maintain a products list.
 npm install
 ```
 
+### Install peer dependences (Optional)
+```
+npm install -g class-validator
+```
+
 ### Configure and startup MySql
 ```
 docker stack up -c mysql-stack.yml mysql
